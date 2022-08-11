@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+//Passing id as param where id is a number
+Route::get("/hello/{id}", function($id){
+    return response('Post:' . $id);
+})->where('id', '[0-9]+');
+
+
+//URL = search/?name=opel&occ=developer
+Route::get('/search', function(Request $request){
+    return $request->name;
 });
