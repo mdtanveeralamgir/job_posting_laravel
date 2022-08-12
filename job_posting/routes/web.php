@@ -15,10 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('listing', [
+    return view('listings', [
         'listings' => Listing::all()]
     );
-});
+})->name('home');
 
 Route::get('/listing/{id}', function($id){
     return view('singleListing', 
