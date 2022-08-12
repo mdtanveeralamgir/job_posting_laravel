@@ -2,6 +2,7 @@
 
 use App\Models\Listing;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ListingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,16 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('listings', [
-        'listings' => Listing::all()]
-    );
-})->name('home');
+Route::get('/', [ListingController::class, 'index'])->name('home');
 
-Route::get('/listing/{listing}', function(Listing $listing){
-    return view('singleListing', 
-    [
-        'listing' => $listing
-    ]
-);
-})->name('singleListing');
+Route::get('/listing/{listing}', [ListingController::class, 'show'])->name('singleListing');
+

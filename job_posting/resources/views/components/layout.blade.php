@@ -48,7 +48,7 @@
 
         <main>
             <h1>Job posting site</h1>
-            @yield('content')
+            {{ $slot }}
         </main>
 
         <footer
