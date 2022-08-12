@@ -28,4 +28,16 @@ class ListingController extends Controller
     {
         return view('listings.show', compact('listing'));
     }
+
+    //show create form
+    public function create()
+    {
+        return view('listings.create');
+    }
+
+    //storing data
+    public function store(Request $request)
+    {
+        dd($request->all());
+    }
 }
