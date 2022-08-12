@@ -20,10 +20,10 @@ Route::get('/', function () {
     );
 })->name('home');
 
-Route::get('/listing/{id}', function($id){
+Route::get('/listing/{listing}', function(Listing $listing){
     return view('singleListing', 
     [
-        'listing' => Listing::singleListing($id)
+        'listing' => $listing
     ]
 );
 })->name('singleListing');
