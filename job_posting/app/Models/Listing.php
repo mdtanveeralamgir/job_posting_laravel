@@ -9,8 +9,17 @@ class Listing extends Model
 {
     use HasFactory;
 
-    public static function singleListing($id)
+    public function scopeFilter($query, array $filters)
     {
-        return Listing::find($id);
+        if(isset($filters['tag']))
+        {
+            $query->where('tags', 'like', '%' . $filters['tag'] . '%');
+        }
+        if(isset($filters['search']))
+        {
+            $query->where('title', 'like', '%' . $filters['search'] . '%')
+            ->orWhere('description', 'like', '%' . $filters['search'] . '%')
+            ->orWhere('tags', 'like', '%' . $filters['search'] . '%');
+        }
     }
 }

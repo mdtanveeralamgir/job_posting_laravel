@@ -8,18 +8,19 @@ use Illuminate\Support\Facades\DB;
 
 class ListingController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $tagFilter = trim($request->tag);
         $listings = null;
-        if($tagFilter)
-        {
-            $listings = DB::table('listings')->where('tags', 'like', '%'. $tagFilter . '%')->get();    
-        }
-        else
-        {
-            $listings = Listing::all();
-        }
+        // if($tagFilter)
+        // {
+        //     $listings = DB::table('listings')->where('tags', 'like', '%'. $tagFilter . '%')->get();
+        // }
+        // else
+        // {
+        //     $listings = Listing::latest()->get(); //Sort by id assending
+        // }
+
+        $listings = Listing::latest()->filter(request(['tag', 'search']))->get();
         return view('listings.index', compact('listings'));
     }
 
