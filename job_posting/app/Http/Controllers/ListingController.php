@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ListingController extends Controller
 {
@@ -38,6 +40,25 @@ class ListingController extends Controller
     //storing data
     public function store(Request $request)
     {
-        dd($request->all());
+        $formFields = $request->validate(
+            [
+                'title' => 'required',
+                'company' => 'required', Rule::unique('listings', 'company'),
+                'location' => 'required',
+                'website' => 'required',
+                'email' => 'required',
+                'tags' => 'required',
+                'description' => 'required'
+            ]
+        );
+
+        Listing::create($formFields);
+
+        //One way to do flash message
+        // Session::flash('message', 'Listing Created');
+
+
+        //Another flash msg way is to use with with the redirect
+        return redirect()->route('home')->with('message', 'Listing created');
     }
 }
