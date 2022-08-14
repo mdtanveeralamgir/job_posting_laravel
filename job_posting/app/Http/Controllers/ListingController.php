@@ -22,7 +22,7 @@ class ListingController extends Controller
         //     $listings = Listing::latest()->get(); //Sort by id assending
         // }
 
-        $listings = Listing::latest()->filter(request(['tag', 'search']))->get();
+        $listings = Listing::latest()->filter(request(['tag', 'search']))->paginate(6);
         return view('listings.index', compact('listings'));
     }
 
