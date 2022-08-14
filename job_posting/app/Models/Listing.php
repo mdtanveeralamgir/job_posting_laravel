@@ -29,6 +29,7 @@ class Listing extends Model
         }
     }
 
+    //Accessor
     protected function logo(): Attribute
     {
         return Attribute::make(

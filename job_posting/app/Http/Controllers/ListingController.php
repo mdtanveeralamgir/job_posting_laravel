@@ -66,4 +66,44 @@ class ListingController extends Controller
         //Another flash msg way is to use with with the redirect
         return redirect()->route('home')->with('message', 'Listing created');
     }
+
+    //Edit listing
+    public function edit(Listing $listing)
+    {
+        return view('listings.edit', compact('listing'));
+    }
+
+    //update listing
+    public function update(Request $request, Listing $listing)
+    {
+        $formFields = $request->validate(
+            [
+                'title' => 'required',
+                'company' => 'required',
+                'location' => 'required',
+                'website' => 'required',
+                'email' => 'required',
+                'tags' => 'required',
+                'description' => 'required'
+            ]);
+        
+        if($request->hasFile('logo'))
+        {
+            //upload the file into storage/app/public/logos folder
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+        }
+
+        $listing->update($formFields);
+
+
+        //Another flash msg way is to use with with the redirect
+        return back()->with('message', 'Listing updated');
+    }
+
+    //Delete a listing
+    public function destroy(Listing $listing)
+    {
+        $listing->delete();
+        return redirect()->route('home')->with('message', 'Listing deleted');
+    }
 }
