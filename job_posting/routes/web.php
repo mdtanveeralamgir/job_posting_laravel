@@ -47,7 +47,13 @@ Route::get('/register', [UserController::class, 'create'])->name('registerUser')
 //Create new user by submitting register form
 Route::post('/users', [UserController::class, 'store'])->name('storeUser');
 
-//Login user
-Route::get('/login', [UserController::class, 'login'])->name('loginUser');
 
+//Logout user
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+//Show login form
+Route::get('/login', [UserController::class, 'login'])->name('loginForm');
+
+//Login user
+Route::post('/users/authenticate', [UserController::class, 'authenticate'])->name('authenticateUser');
 

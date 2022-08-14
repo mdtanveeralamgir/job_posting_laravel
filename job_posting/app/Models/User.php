@@ -44,6 +44,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    //mutator to hasb password before storing into db
     protected function password(): Attribute
     {
         return Attribute::make(

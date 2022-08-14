@@ -36,4 +36,39 @@ class UserController extends Controller
 
         return redirect()->route('home')->with('message', 'User registered successfully logged in');
     }
+
+    public function logout(Request $request)
+    {
+        auth()->logout(); //Remove the auth info from user session
+
+        //Invalidate users session and regerate users csrf token
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('home')->with('message', 'You have been logged out');
+    }
+
+    //Show login form
+    public function login()
+    {
+        return view('users.login');
+    }
+
+    //Authenticate user
+    public function authenticate(Request $request)
+    {
+        $formData = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => 'required'
+        ]);
+
+        if(auth()->attempt($formData))
+        {
+            $request->session()->regenerate();
+
+            return redirect()->route('home')->with('message', 'You have successfully logged in');
+        }
+
+        return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+    }
 }
