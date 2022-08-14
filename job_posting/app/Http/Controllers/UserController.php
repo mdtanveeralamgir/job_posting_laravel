@@ -66,7 +66,7 @@ class UserController extends Controller
         {
             $request->session()->regenerate();
 
-            return redirect()->route('home')->with('message', 'You have successfully logged in');
+            return redirect('home')->route('home')->with('message', 'You have successfully logged in');
         }
 
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
