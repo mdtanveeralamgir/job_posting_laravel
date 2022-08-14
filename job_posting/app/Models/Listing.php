@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+use function PHPUnit\Framework\isNull;
 
 class Listing extends Model
 {
@@ -23,5 +27,15 @@ class Listing extends Model
             ->orWhere('description', 'like', '%' . $filters['search'] . '%')
             ->orWhere('tags', 'like', '%' . $filters['search'] . '%');
         }
+    }
+
+    protected function logo(): Attribute
+    {
+        return Attribute::make(
+            get: function($path) {
+                return is_null($path) ? 'images/no-image.png' : 'storage/' . $path;
+            
+            }
+        );
     }
 }
