@@ -22,7 +22,8 @@ Route::get('/', [ListingController::class, 'index'])->name('home');
 
 
 //Group middleware to check authentication
-Route::middleware(['auth'])->group(function (){
+Route::middleware(['auth'])->group(function ()
+{
 
     //Show create form
     Route::get('/listings/create', [ListingController::class, 'create'])->name('createListing');
@@ -42,8 +43,23 @@ Route::middleware(['auth'])->group(function (){
 });
 
 
+//Can't access if user is logged in
+Route::middleware(['guest'])->group(function()
+{
 
+    //Show register/user create form
+    Route::get('/register', [UserController::class, 'create'])->name('registerUser');
 
+    //Create new user by submitting register form
+    Route::post('/users', [UserController::class, 'store'])->name('storeUser');
+
+    //Show login form
+    Route::get('/login', [UserController::class, 'login'])->name('loginForm');
+
+    //Login user
+    Route::post('/users/authenticate', [UserController::class, 'authenticate'])->name('authenticateUser');
+
+});
 
 //Single listing
 Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('singleListing');
@@ -51,17 +67,9 @@ Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('sin
 
 //Authentication
 
-//Show register/user create form
-Route::get('/register', [UserController::class, 'create'])->name('registerUser');
-
-//Create new user by submitting register form
-Route::post('/users', [UserController::class, 'store'])->name('storeUser');
 
 
 
-//Show login form
-Route::get('/login', [UserController::class, 'login'])->name('loginForm');
 
-//Login user
-Route::post('/users/authenticate', [UserController::class, 'authenticate'])->name('authenticateUser');
+
 
